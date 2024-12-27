@@ -3,6 +3,8 @@ package Game;
 import Color.Color;
 import Player.Player;
 
+import java.util.ArrayList;
+
 public class Game {
 
     // Have an array of players
@@ -10,6 +12,7 @@ public class Game {
 
     private Player[] players;
     private Board board;
+    private ArrayList<Integer> plays = new ArrayList<>();
 
     public Game(){
         players = new Player[2];

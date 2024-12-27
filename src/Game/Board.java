@@ -254,12 +254,21 @@ public class Board {
     // Game.Game.Board checks if the piece can move to the new position
     public void move(int x, int y, int newX, int newY, Piece piece) {
 
+        // First check if we have a piece on that square
+        if(getSquare(x,y).getCurrPiece() == null){
+            System.out.println("You dont have a piece there.");
+            move(x,y,newX,newY,getSquare(x,y).getCurrPiece());
+            return;
+        }
+
+        // Set piece on an empty spot
         if (!isEmpty(newX, newY) && outOfBoard(newX, newY)) {
             piece.move(x, y, newX, newY, this);
             getSquare(x, y).setPiece(null);
             getSquare(newX, newY).setPiece(piece);
         }
 
+        // Capture a piece
         if (isEmpty(newX, newY) && outOfBoard(newX, newY) && !isCatchable(x, y, newX, newY)) {
             piece.catchPiece(x, y, newX, newY, this);
             getSquare(x, y).setPiece(null);
