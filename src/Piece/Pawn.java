@@ -51,9 +51,12 @@ public class Pawn extends Piece {
         }
     }
 
+    // Pawn have a different move when he can catch a piece
     @Override
     public void catchPiece(int x, int y, int newX, int newY, Board board) {
 
+        x = board.getX(this);
+        y = board.getY(this);
 
         if (getColor() == Color.WHITE) {
             if (newX == x - 1 && newY == y + 1 || newX == x + 1 && newY == y + 1) {

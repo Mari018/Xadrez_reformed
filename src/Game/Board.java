@@ -5,6 +5,7 @@ import Piece.Piece;
 import Player.Player;
 import Piece.Pawn;
 import Piece.King;
+
 import java.util.ArrayList;
 
 public class Board {
@@ -15,24 +16,25 @@ public class Board {
 
     private Player[] players;
     private Square[][] board;
-    private ArrayList<Piece> captured;
-    private static final char[] y = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
-    private static final int[] x = {1, 2, 3, 4, 5, 6, 7, 8};
+    private ArrayList<Piece> captured = new ArrayList<>();
+    private static final char[] x = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
+    private static final int[] y = {1, 2, 3, 4, 5, 6, 7, 8};
 
     public Board(Player[] players) {
 
         this.players = players;
         createBoard();
+
     }
 
     // organized the way we use the coordinates
-    private void createPosition(int x, char y) {
+    private void createPosition(char x, int y) {
 
         int intX = 0;
         int intY = 0;
 
         // Change the cols
-        switch (x) {
+        switch (y) {
             case '1' -> intX = 0;
             case '2' -> intX = 1;
             case '3' -> intX = 2;
@@ -44,7 +46,7 @@ public class Board {
         }
 
         // Change the rows
-        switch (y) {
+        switch (x) {
             case 'A' -> intY = 0;
             case 'B' -> intY = 1;
             case 'C' -> intY = 2;
@@ -58,7 +60,6 @@ public class Board {
         // Create the square with the news positions
         board[x][y] = new Square(intX, intY);
     }
-
 
     // Create a 8x8 board game
     private void createBoard() {
@@ -162,17 +163,13 @@ public class Board {
     }
 
     // Check if the position is empty
-    public boolean isEmpty(int x, int y) {
+    private boolean isEmpty(int x, int y) {
 
-        if (board[x][y].getCurrPiece() == null) {
-            return true;
-        }
-
-        return false;
+        return board[x][y].getCurrPiece() == null;
     }
 
     // So we can´t move out of the board
-    public boolean outOfBoard(int x, int y) {
+    private boolean outOfBoard(int x, int y) {
         if (x < 0 || x > 7) {
             return true;
         }
@@ -189,7 +186,7 @@ public class Board {
         return board[x][y];
     }
 
-    public ArrayList<Piece> getCaptured (){
+    public ArrayList<Piece> getCaptured() {
         return captured;
     }
 
@@ -236,47 +233,52 @@ public class Board {
         if (getSquare(x, y).getCurrPiece().getColor() == Color.WHITE)
             if (getSquare(x, y).getCurrPiece().getColor() != getSquare(newX, newY).getColor()) {
                 players[1].getOwnPieces().remove(getSquare(newX, newY).getCurrPiece());
-                captured.add(getSquare(newX, newY).getCurrPiece());
+                getCaptured().add(getSquare(newX, newY).getCurrPiece());
                 return true;
-            } else {
-                if (getSquare(x, y).getCurrPiece().getColor() == Color.BLACK) {
-                    if (getSquare(x, y).getCurrPiece().getColor() != getSquare(newX, newY).getColor()) {
-                        players[0].getOwnPieces().remove(getSquare(newX, newY).getCurrPiece());
-                        captured.add(getSquare(newX, newY).getCurrPiece());
-                        return true;
-                    }
-                }
             }
+
+        if (getSquare(x, y).getCurrPiece().getColor() == Color.BLACK) {
+            if (getSquare(x, y).getCurrPiece().getColor() != getSquare(newX, newY).getColor()) {
+                players[0].getOwnPieces().remove(getSquare(newX, newY).getCurrPiece());
+                getCaptured().add(getSquare(newX, newY).getCurrPiece());
+                return true;
+            }
+        }
+
         System.out.println(" You can´t capture your own piece.");
         return false;
     }
 
     // Game.Game.Board checks if the piece can move to the new position
-    public void move(int x, int y, int newX, int newY, Piece piece) {
+    public void move(int x, int y, int newX, int newY) {
+        Piece piece = getSquare(x, y).getCurrPiece();
 
         // First check if we have a piece on that square
-        if(getSquare(x,y).getCurrPiece() == null){
-            System.out.println("You dont have a piece there.");
-            move(x,y,newX,newY,getSquare(x,y).getCurrPiece());
+        if (getSquare(x, y).getCurrPiece() == null) {
+            System.out.println("You don't have a piece there.");
+            move(x, y, newX, newY);
             return;
         }
 
         // Set piece on an empty spot
-        if (!isEmpty(newX, newY) && outOfBoard(newX, newY)) {
+        if (isEmpty(newX, newY) || outOfBoard(newX, newY)) {
             piece.move(x, y, newX, newY, this);
-            getSquare(x, y).setPiece(null);
             getSquare(newX, newY).setPiece(piece);
+            getSquare(x, y).setPiece(null);
         }
 
         // Capture a piece
-        if (isEmpty(newX, newY) && outOfBoard(newX, newY) && !isCatchable(x, y, newX, newY)) {
+        else if (!isEmpty(newX, newY) && !isCatchable(x, y, newX, newY) || outOfBoard(newX, newY) && !isCatchable(x, y, newX, newY)) {
             piece.catchPiece(x, y, newX, newY, this);
-            getSquare(x, y).setPiece(null);
             getSquare(newX, newY).setPiece(piece);
+            getSquare(x, y).setPiece(null);
 
+
+            // If the move is illegal
+            // Call again the method move
         } else {
             System.out.println("You can´t move there.");
-            piece.move(x, y, newX, newY, this);
+
         }
     }
 
