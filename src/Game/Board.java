@@ -27,40 +27,6 @@ public class Board {
 
     }
 
-    // organized the way we use the coordinates
-    private void createPosition(char x, int y) {
-
-        int intX = 0;
-        int intY = 0;
-
-        // Change the cols
-        switch (y) {
-            case '1' -> intX = 0;
-            case '2' -> intX = 1;
-            case '3' -> intX = 2;
-            case '4' -> intX = 3;
-            case '5' -> intX = 4;
-            case '6' -> intX = 5;
-            case '7' -> intX = 6;
-            case '8' -> intX = 7;
-        }
-
-        // Change the rows
-        switch (x) {
-            case 'A' -> intY = 0;
-            case 'B' -> intY = 1;
-            case 'C' -> intY = 2;
-            case 'D' -> intY = 3;
-            case 'E' -> intY = 4;
-            case 'F' -> intY = 5;
-            case 'G' -> intY = 6;
-            case 'H' -> intY = 7;
-        }
-
-        // Create the square with the news positions
-        board[x][y] = new Square(intX, intY);
-    }
-
     // Create a 8x8 board game
     private void createBoard() {
 
