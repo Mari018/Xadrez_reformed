@@ -5,6 +5,10 @@ import Piece.Piece;
 import Player.Player;
 import Piece.Pawn;
 import Piece.King;
+import Piece.Bishop;
+import Piece.Knight;
+import Piece.Queen;
+import Piece.Rook;
 
 import java.util.ArrayList;
 
@@ -43,6 +47,10 @@ public class Board {
     public void addAllPieces(Player player) {
         addPawns(player);
         addKing(player);
+        addQueen(player);
+        addBishop(player);
+        addKnight(player);
+        addRook(player);
     }
 
     // Add the pawns to the game and to the player
@@ -85,6 +93,100 @@ public class Board {
         }
     }
 
+    // Add the Rooks
+    private void addRook(Player player) {
+        Color playerColor = player.getColor();
+        Piece piece;
+        Piece piece1;
+
+        if (playerColor == Color.WHITE) {
+            piece = new Rook(Color.WHITE);
+            piece1 = new Rook(Color.WHITE);
+            board[0][0].setPiece(piece);
+            board[0][7].setPiece(piece1);
+            player.getOwnPieces().add(piece);
+            player.getOwnPieces().add(piece1);
+        } else {
+            if (playerColor == Color.BLACK) {
+                piece = new Rook(Color.BLACK);
+                piece1 = new Rook(Color.BLACK);
+                board[7][0].setPiece(piece);
+                board[7][7].setPiece(piece1);
+                player.getOwnPieces().add(piece);
+                player.getOwnPieces().add(piece1);
+            }
+        }
+    }
+
+    // Add the Queens
+    private void addQueen(Player player) {
+        Color playerColor = player.getColor();
+        Piece piece;
+
+
+        if (playerColor == Color.WHITE) {
+            piece = new Queen(Color.WHITE);
+            board[0][3].setPiece(piece);
+            player.getOwnPieces().add(piece);
+        } else {
+            if (playerColor == Color.BLACK) {
+                piece = new Queen(Color.BLACK);
+                board[7][4].setPiece(piece);
+                player.getOwnPieces().add(piece);
+            }
+        }
+    }
+
+    // Add the Knights
+    private void addKnight(Player player) {
+        Color playerColor = player.getColor();
+        Piece piece;
+        Piece piece1;
+
+        if (playerColor == Color.WHITE) {
+            piece = new Knight(Color.WHITE);
+            piece1 = new Knight(Color.WHITE);
+            board[0][1].setPiece(piece);
+            board[0][6].setPiece(piece1);
+            player.getOwnPieces().add(piece);
+            player.getOwnPieces().add(piece1);
+        } else {
+            if (playerColor == Color.BLACK) {
+                piece = new Knight(Color.BLACK);
+                piece1 = new Knight(Color.BLACK);
+                board[7][1].setPiece(piece);
+                board[7][6].setPiece(piece1);
+                player.getOwnPieces().add(piece);
+                player.getOwnPieces().add(piece1);
+            }
+        }
+    }
+
+    // Add the Bishops
+    private void addBishop(Player player) {
+        Color playerColor = player.getColor();
+        Piece piece;
+        Piece piece1;
+
+        if (playerColor == Color.WHITE) {
+            piece = new Bishop(Color.WHITE);
+            piece1 = new Bishop(Color.WHITE);
+            board[0][2].setPiece(piece);
+            board[0][5].setPiece(piece1);
+            player.getOwnPieces().add(piece);
+            player.getOwnPieces().add(piece1);
+        } else {
+            if (playerColor == Color.BLACK) {
+                piece = new Bishop(Color.BLACK);
+                piece1 = new Bishop(Color.BLACK);
+                board[7][2].setPiece(piece);
+                board[7][5].setPiece(piece1);
+                player.getOwnPieces().add(piece);
+                player.getOwnPieces().add(piece1);
+            }
+        }
+    }
+
     // Print the board
     public void printBoard() {
 
@@ -114,6 +216,34 @@ public class Board {
                         System.out.print(" wK");
                     } else {
                         System.out.print(" bK");
+                    }
+                }
+                if (piece instanceof Bishop) {
+                    if (piece.getColor() == Color.WHITE) {
+                        System.out.print(" wB");
+                    } else {
+                        System.out.print(" bB");
+                    }
+                }
+                if (piece instanceof Knight) {
+                    if (piece.getColor() == Color.WHITE) {
+                        System.out.print(" wk");
+                    } else {
+                        System.out.print(" bk");
+                    }
+                }
+                if (piece instanceof Queen){
+                    if (piece.getColor() == Color.WHITE) {
+                        System.out.print(" wQ");
+                    } else {
+                        System.out.print(" bQ");
+                    }
+                }
+                if (piece instanceof Rook){
+                    if (piece.getColor() == Color.WHITE) {
+                        System.out.print(" wR");
+                    } else {
+                        System.out.print(" bR");
                     }
                 }
             }
@@ -211,19 +341,16 @@ public class Board {
             }
         }
 
-        System.out.println(" You can´t capture your own piece.");
         return false;
     }
 
-    // Game.Game.Board checks if the piece can move to the new position
-    public void move(int x, int y, int newX, int newY) {
+    // Board checks if the piece can move to the new position
+    public boolean move(int x, int y, int newX, int newY) {
         Piece piece = getSquare(x, y).getCurrPiece();
 
         // First check if we have a piece on that square
         if (getSquare(x, y).getCurrPiece() == null) {
-            System.out.println("You don't have a piece there.");
-            move(x, y, newX, newY);
-            return;
+            return false;
         }
 
         // Set piece on an empty spot
@@ -231,20 +358,22 @@ public class Board {
             piece.move(x, y, newX, newY, this);
             getSquare(newX, newY).setPiece(piece);
             getSquare(x, y).setPiece(null);
+            return true;
         }
 
         // Capture a piece
-        else if (!isEmpty(newX, newY) && !isCatchable(x, y, newX, newY) || outOfBoard(newX, newY) && !isCatchable(x, y, newX, newY)) {
+        if (!isEmpty(newX, newY) && isCatchable(x, y, newX, newY) || outOfBoard(newX, newY) && !isCatchable(x, y, newX, newY)) {
             piece.catchPiece(x, y, newX, newY, this);
             getSquare(newX, newY).setPiece(piece);
             getSquare(x, y).setPiece(null);
+            return true;
 
 
             // If the move is illegal
             // Call again the method move
         } else {
             System.out.println("You can´t move there.");
-
+            return false;
         }
     }
 

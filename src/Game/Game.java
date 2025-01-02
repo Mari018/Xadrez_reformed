@@ -3,7 +3,6 @@ package Game;
 import Color.Color;
 import Player.Player;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game {
@@ -13,6 +12,7 @@ public class Game {
 
     private Player[] players;
     private Board board;
+    int turn = 0;
 
 
     public Game() {
@@ -34,7 +34,7 @@ public class Game {
 
     private void game() {
         Scanner scanner = new Scanner(System.in);
-        int turn = 0;
+
 
         while (!winner()) {
             try {
@@ -58,9 +58,12 @@ public class Game {
                 int toX = to.charAt(0) - 'A';
                 int toY = Integer.parseInt(to.substring(1)) - 1;
 
-                board.move(fromX, fromY, toX, toY);
-                turn++;
-
+                if (!board.move(fromX, fromY, toX, toY)) {
+                    game();
+                } else {
+                    board.move(fromX, fromY, toX, toY);
+                    turn++;
+                }
             } catch (NumberFormatException e) {
                 throw new RuntimeException(e);
             }
