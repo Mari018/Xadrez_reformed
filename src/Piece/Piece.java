@@ -18,10 +18,10 @@ public abstract class Piece {
     }
 
     // Method move to all pieces
-    public abstract void move(int x, int y, int newX,int newY, Board board);
+    public abstract boolean move(int x, int y, int newX,int newY);
 
     // Method to catch the opponent piece
-    public abstract void catchPiece(int x, int y, int newX,int newY, Board board);
+    public abstract boolean catchPiece(int x, int y, int newX,int newY);
 
     public Color getColor(){
         return color;

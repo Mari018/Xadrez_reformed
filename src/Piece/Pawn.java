@@ -15,59 +15,57 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void move(int x, int y, int newX, int newY, Board board) {
+    public boolean move(int x, int y, int newX, int newY) {
 
-        x = board.getX(this);
-        y = board.getY(this);
 
         // First move of the pawn he can move 2 or 1 squares at the time
         if (move == 0) {
             if (getColor() == Color.WHITE) {
-                if (newX == x && newY == y + 2 || newX == x && newY == y + 1) {
+                if (newX == x + 2 && newY == y || newX == x + 1 && newY == y) {
                     move++;
-                    return;
-                }
-            } else {
-                if (getColor() == Color.BLACK) {
-                    if (newX == x && newY == y - 2 || newX == x && newY == y - 1) {
-                        move++;
-                        return;
-                    }
+                    return true;
                 }
             }
-        } else {
-            // Normal 1 square move
-            if (getColor() == Color.WHITE) {
-                if (newX == x && newY == y + 1) {
-                    return;
-                }
-            } else {
-                if (getColor() == Color.BLACK) {
-                    if (newX == x && newY == y - 1) {
-                        return;
-                    }
-                }
-            }
-        }
-    }
 
-    // Pawn have a different move when he can catch a piece
-    @Override
-    public void catchPiece(int x, int y, int newX, int newY, Board board) {
-
-        x = board.getX(this);
-        y = board.getY(this);
-
-        if (getColor() == Color.WHITE) {
-            if (newX == x - 1 && newY == y + 1 || newX == x + 1 && newY == y + 1) {
-                return;
-            }
-        } else {
             if (getColor() == Color.BLACK) {
-                if (newX == x - 1 && newY == y - 1 || newX == x + 1 && newY == y - 1) {
-                    return;
+                if (newX == x - 2 && newY == y || newX == x - 1 && newY == y) {
+                    move++;
+                    return true;
                 }
             }
+
         }
+        if (getColor() == Color.WHITE) {
+            if (newX == x + 1 && newY == y) {
+                return true;
+            }
+        }
+        if (getColor() == Color.BLACK) {
+            if (newX == x - 1 && newY == y) {
+                return true;
+            }
+        }
+
+        return false;
     }
+
+    @Override
+    public boolean catchPiece(int x, int y, int newX, int newY) {
+        if (getColor() == Color.WHITE) {
+            if (newX == x + 1 && newY == y - 1 || newX == x + 1 && newY == y + 1) {
+                return true;
+            }
+        }
+        if (getColor() == Color.BLACK) {
+            if (newX == x - 1 && newY == y - 1 || newX == x - 1 && newY == y + 1) {
+                return true;
+            }
+        }
+
+        return false;
+
+
+    }
+
+
 }

@@ -52,11 +52,13 @@ public class Game {
                 String to = scanner.next();
 
                 //Switches the coordinates to index
-                int fromX = from.charAt(0) - 'A';
-                int fromY = Integer.parseInt(from.substring(1)) - 1;
 
-                int toX = to.charAt(0) - 'A';
-                int toY = Integer.parseInt(to.substring(1)) - 1;
+                    int fromX = from.charAt(0) - 'A';
+                    int fromY = Integer.parseInt(from.substring(1)) - 1;
+
+                    int toX = to.charAt(0) - 'A';
+                    int toY = Integer.parseInt(to.substring(1)) - 1;
+
 
                 if (!board.move(fromX, fromY, toX, toY)) {
                     game();
@@ -65,7 +67,9 @@ public class Game {
                     turn++;
                 }
             } catch (NumberFormatException e) {
-                throw new RuntimeException(e);
+               game();
+              throw new RuntimeException(e);
+
             }
         }
     }

@@ -12,24 +12,27 @@ public class King extends Piece {
 
 
     @Override
-    public void move(int x, int y, int newX, int newY, Board board) {
+    public boolean move(int x, int y, int newX, int newY) {
 
-        x = board.getX(this);
-        y = board.getY(this);
 
         if (newX == x && newY == y + 1 || newX == x && newY == y - 1 || newX == x - 1 && newY == y || newX == x + 1 && newY == y) {
-            return;
+            return true;
         }
 
         if (newX == x + 1 && newY == y + 1 || newX == x + 1 && newY == y - 1 || newX == x - 1 && newY == y + 1 || newX == x - 1 && newY == y - 1) {
-            return;
+            return true;
         }
+        return false;
     }
 
     @Override
-    public void catchPiece(int x, int y, int newX, int newY, Board board) {
+    public boolean catchPiece(int x, int y, int newX, int newY) {
 
-        move(x, y, newX, newY, board);
+       if(!move(x, y, newX, newY)){
+           move(x,y,newX,newY);
+           return true;
+       }
+       return false;
     }
 }
 

@@ -11,12 +11,12 @@ public class Rook extends Piece{
     }
 
     @Override
-    public void move(int x, int y, int newX, int newY, Board board) {
-
+    public boolean move(int x, int y, int newX, int newY) {
+return false;
     }
 
     @Override
-    public void catchPiece(int x, int y, int newX, int newY, Board board) {
-
+    public boolean catchPiece(int x, int y, int newX, int newY) {
+return false;
     }
 }

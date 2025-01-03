@@ -21,8 +21,8 @@ public class Board {
     private Player[] players;
     private Square[][] board;
     private ArrayList<Piece> captured = new ArrayList<>();
-    private static final char[] x = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
-    private static final int[] y = {1, 2, 3, 4, 5, 6, 7, 8};
+    private static final char[] row = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
+    private static final int[] col = {1, 2, 3, 4, 5, 6, 7, 8};
 
     public Board(Player[] players) {
 
@@ -38,7 +38,7 @@ public class Board {
 
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                board[i][j] = new Square(x[i], y[j]);
+                board[i][j] = new Square(row[i], col[j]);
             }
         }
     }
@@ -192,7 +192,7 @@ public class Board {
 
         // Loop to print all the positions on the 2D array
         for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
+            for (int j = 0; j < board.length; j++) {
 
                 Piece piece = board[i][j].getCurrPiece();
 
@@ -232,14 +232,14 @@ public class Board {
                         System.out.print(" bk");
                     }
                 }
-                if (piece instanceof Queen){
+                if (piece instanceof Queen) {
                     if (piece.getColor() == Color.WHITE) {
                         System.out.print(" wQ");
                     } else {
                         System.out.print(" bQ");
                     }
                 }
-                if (piece instanceof Rook){
+                if (piece instanceof Rook) {
                     if (piece.getColor() == Color.WHITE) {
                         System.out.print(" wR");
                     } else {
@@ -249,11 +249,11 @@ public class Board {
             }
             // Print the numbers of the coordinates
             System.out.print(" ");
-            System.out.println(x[i]);
+            System.out.println(row[i]);
         }
         // Print the letters of the coordinates
         for (int i = 0; i < board.length; i++) {
-            System.out.print(" " + y[i] + " ");
+            System.out.print(" " + col[i] + " ");
         }
         System.out.println("\n");
     }
@@ -286,59 +286,27 @@ public class Board {
         return captured;
     }
 
-    // Return the position on the x-axis
-    public int getX(Piece piece) {
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                if (board[i][j].getCurrPiece() == null) {
-                    continue;
-                }
-
-                if (board[i][j].getCurrPiece().equals(piece)) {
-                    return i;
-                }
-            }
-
-        }
-        System.out.println("You don't have that piece on the board.");
-        return 0;
-    }
-
-    // Return the position ont the y-axis
-    public int getY(Piece piece) {
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                if (board[i][j].getCurrPiece() == null) {
-                    continue;
-                }
-
-                if (board[i][j].getCurrPiece().equals(piece)) {
-                    return j;
-                }
-            }
-        }
-        System.out.println("You don't have that piece on the board.");
-        return 0;
-    }
-
     // Checks if the currPiece can catch the piece on the new position
     // if he can catch remove to the player who lost the piece
     // Add to the caught array
     public boolean isCatchable(int x, int y, int newX, int newY) {
 
-        if (getSquare(x, y).getCurrPiece().getColor() == Color.WHITE)
-            if (getSquare(x, y).getCurrPiece().getColor() != getSquare(newX, newY).getColor()) {
-                players[1].getOwnPieces().remove(getSquare(newX, newY).getCurrPiece());
-                getCaptured().add(getSquare(newX, newY).getCurrPiece());
-                return true;
-            }
+        if (getSquare(newX, newY) != null) {
+            if (getSquare(x, y).getCurrPiece().getColor() == Color.WHITE)
+                if (getSquare(x, y).getCurrPiece().getColor() != getSquare(newX, newY).getCurrPiece().getColor()) {
+                    players[1].getOwnPieces().remove(getSquare(newX, newY).getCurrPiece());
+                    getCaptured().add(getSquare(newX, newY).getCurrPiece());
+                    return true;
+                } else {
+                    if (getSquare(x, y).getCurrPiece().getColor() == Color.BLACK) {
+                        if (getSquare(x, y).getCurrPiece().getColor() != getSquare(newX, newY).getCurrPiece().getColor()) {
+                            players[0].getOwnPieces().remove(getSquare(newX, newY).getCurrPiece());
+                            getCaptured().add(getSquare(newX, newY).getCurrPiece());
+                            return true;
+                        }
 
-        if (getSquare(x, y).getCurrPiece().getColor() == Color.BLACK) {
-            if (getSquare(x, y).getCurrPiece().getColor() != getSquare(newX, newY).getColor()) {
-                players[0].getOwnPieces().remove(getSquare(newX, newY).getCurrPiece());
-                getCaptured().add(getSquare(newX, newY).getCurrPiece());
-                return true;
-            }
+                    }
+                }
         }
 
         return false;
@@ -354,28 +322,27 @@ public class Board {
         }
 
         // Set piece on an empty spot
-        if (isEmpty(newX, newY) || outOfBoard(newX, newY)) {
-            piece.move(x, y, newX, newY, this);
-            getSquare(newX, newY).setPiece(piece);
-            getSquare(x, y).setPiece(null);
-            return true;
-        }
+        if (piece.move(x, y, newX, newY) && isEmpty(newX, newY)) {
 
-        // Capture a piece
-        if (!isEmpty(newX, newY) && isCatchable(x, y, newX, newY) || outOfBoard(newX, newY) && !isCatchable(x, y, newX, newY)) {
-            piece.catchPiece(x, y, newX, newY, this);
             getSquare(newX, newY).setPiece(piece);
             getSquare(x, y).setPiece(null);
             return true;
 
-
-            // If the move is illegal
-            // Call again the method move
-        } else {
-            System.out.println("You can´t move there.");
-            return false;
         }
-    }
+
+        if (piece.catchPiece(x, y, newX, newY) && !isEmpty(newX, newY) && isCatchable(x, y, newX, newY)) {
+
+            getSquare(newX, newY).setPiece(piece);
+            getSquare(x, y).setPiece(null);
+            return true;
+
+        }
+
+    // If the move is illegal
+    // Call again the method move
+        System.out.println("can't move");
+        return false;
+}
 
 }
 
