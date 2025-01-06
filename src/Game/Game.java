@@ -3,6 +3,7 @@ package Game;
 import Color.Color;
 import Player.Player;
 
+import javax.swing.*;
 import java.util.Scanner;
 
 public class Game {
@@ -48,29 +49,41 @@ public class Game {
                 // Writing the coordinates we want to move from to the next position
                 System.out.print("Enter the coordinates of the piece you want to move: ");
                 String from = scanner.next().toUpperCase();
-                System.out.print("Enter where you want to move the piece: ");
-                String to = scanner.next().toUpperCase();
+                if (from.equals("RESTART")) {
+                    JOptionPane.showMessageDialog(null, "Are you sure?", null,
+                            JOptionPane.INFORMATION_MESSAGE);
+                    restart();
+                } else {
 
-                //Switches the coordinates to index
+                    System.out.print("Enter where you want to move the piece: ");
+                    String to = scanner.next().toUpperCase();
 
+                    //Switches the coordinates to index
                     int fromX = from.charAt(0) - 'A';
                     int fromY = Integer.parseInt(from.substring(1)) - 1;
 
                     int toX = to.charAt(0) - 'A';
                     int toY = Integer.parseInt(to.substring(1)) - 1;
 
-
-                if (!board.move(fromX, fromY, toX, toY)) {
-                    game();
-                } else {
-                    board.move(fromX, fromY, toX, toY);
-                    turn++;
+                    if (!board.move(fromX, fromY, toX, toY)) {
+                        game();
+                    } else {
+                        board.move(fromX, fromY, toX, toY);
+                        turn++;
+                    }
                 }
-            } catch (NumberFormatException e) {
-              throw new RuntimeException(e);
 
+            } catch (NumberFormatException e) {
+                throw new RuntimeException(e);
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         }
+    }
+
+    private void restart() throws Exception {
+        start();
     }
 
     // Choose who starts
