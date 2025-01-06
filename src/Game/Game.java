@@ -47,9 +47,9 @@ public class Game {
 
                 // Writing the coordinates we want to move from to the next position
                 System.out.print("Enter the coordinates of the piece you want to move: ");
-                String from = scanner.next();
+                String from = scanner.next().toUpperCase();
                 System.out.print("Enter where you want to move the piece: ");
-                String to = scanner.next();
+                String to = scanner.next().toUpperCase();
 
                 //Switches the coordinates to index
 
