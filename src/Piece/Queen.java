@@ -1,7 +1,6 @@
 package Piece;
 
 import Color.Color;
-import Game.Board;
 
 public class Queen extends Piece {
 
@@ -16,8 +15,10 @@ public class Queen extends Piece {
 
         if (newX == x && newY < y) {
             for (int i = y - 1; i > newY; i--) {
-            return true;
-            }
+
+                    return true;
+                }
+
         }
     return false;
     }

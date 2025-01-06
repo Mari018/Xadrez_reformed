@@ -28,8 +28,8 @@ public class King extends Piece {
     @Override
     public boolean catchPiece(int x, int y, int newX, int newY) {
 
-       if(!move(x, y, newX, newY)){
-           move(x,y,newX,newY);
+       if(move(x, y, newX, newY)){
+
            return true;
        }
        return false;

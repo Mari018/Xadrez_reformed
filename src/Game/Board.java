@@ -264,20 +264,6 @@ public class Board {
         return board[x][y].getCurrPiece() == null;
     }
 
-    // So we can´t move out of the board
-    private boolean outOfBoard(int x, int y) {
-        if (x < 0 || x > 7) {
-            return true;
-        }
-
-        if (y < 0 || y > 7) {
-            return true;
-        }
-
-        return false;
-
-    }
-
     public Square getSquare(int x, int y) {
         return board[x][y];
     }
@@ -330,6 +316,7 @@ public class Board {
 
         }
 
+        // Catch a piece
         if (piece.catchPiece(x, y, newX, newY) && !isEmpty(newX, newY) && isCatchable(x, y, newX, newY)) {
 
             getSquare(newX, newY).setPiece(piece);

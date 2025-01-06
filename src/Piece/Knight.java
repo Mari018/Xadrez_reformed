@@ -6,17 +6,34 @@ import Game.Board;
 public class Knight extends Piece {
 
 
-    public Knight( Color color) {
+    public Knight(Color color) {
         super(PieceType.KNIGHT, color);
     }
 
     @Override
     public boolean move(int x, int y, int newX, int newY) {
-return false;
+
+        if (getColor() == Color.WHITE) {
+            if (newX == x + 2 && newY == y + 1 || newX == x + 2 && newY == y - 1) {
+                return true;
+            }
+        }
+
+        if (getColor() == Color.BLACK) {
+            if (newX == x - 2 && newY == y + 1 || newX == x - 2 && newY == y + 1) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public boolean catchPiece(int x, int y, int newX, int newY) {
-return false;
+
+        if (move(x, y, newX, newY)){
+            return true;
+        }
+
+        return false;
     }
 }

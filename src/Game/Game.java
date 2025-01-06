@@ -67,7 +67,6 @@ public class Game {
                     turn++;
                 }
             } catch (NumberFormatException e) {
-               game();
               throw new RuntimeException(e);
 
             }
