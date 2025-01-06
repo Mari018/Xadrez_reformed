@@ -283,17 +283,18 @@ public class Board {
                     players[1].getOwnPieces().remove(getSquare(newX, newY).getCurrPiece());
                     getCaptured().add(getSquare(newX, newY).getCurrPiece());
                     return true;
-                } else {
-                    if (getSquare(x, y).getCurrPiece().getColor() == Color.BLACK) {
-                        if (getSquare(x, y).getCurrPiece().getColor() != getSquare(newX, newY).getCurrPiece().getColor()) {
-                            players[0].getOwnPieces().remove(getSquare(newX, newY).getCurrPiece());
-                            getCaptured().add(getSquare(newX, newY).getCurrPiece());
-                            return true;
-                        }
-
-                    }
                 }
+
+            if (getSquare(x, y).getCurrPiece().getColor() == Color.BLACK) {
+                if (getSquare(x, y).getCurrPiece().getColor() != getSquare(newX, newY).getCurrPiece().getColor()) {
+                    players[0].getOwnPieces().remove(getSquare(newX, newY).getCurrPiece());
+                    getCaptured().add(getSquare(newX, newY).getCurrPiece());
+                    return true;
+                }
+
+            }
         }
+
 
         return false;
     }
@@ -325,11 +326,11 @@ public class Board {
 
         }
 
-    // If the move is illegal
-    // Call again the method move
+        // If the move is illegal
+        // Call again the method move
         System.out.println("can't move");
         return false;
-}
+    }
 
 }
 

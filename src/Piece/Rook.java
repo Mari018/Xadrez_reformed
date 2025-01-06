@@ -3,7 +3,7 @@ package Piece;
 import Color.Color;
 import Game.Board;
 
-public class Rook extends Piece{
+public class Rook extends Piece {
 
 
     public Rook(Color color) {
@@ -12,11 +12,31 @@ public class Rook extends Piece{
 
     @Override
     public boolean move(int x, int y, int newX, int newY) {
-return false;
+
+        if (newX == x) {
+            int direction = (newY < y) ? 1 : -1;
+            for (int i = y + direction; i >= newY; i--) {
+                if (i == newY) {
+                    return true;
+                }
+            }
+            return true;
+        }
+        if (newY == y) {
+            int direction = (newX < x) ? 1 : -1;
+            for (int i = x + direction; i <= newX; i++) {
+                if (i == newX) {
+                    return true;
+                }
+            }
+            return true;
+        }
+
+        return false;
     }
 
     @Override
     public boolean catchPiece(int x, int y, int newX, int newY) {
-return false;
+        return false;
     }
 }
