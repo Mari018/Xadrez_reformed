@@ -1,14 +1,14 @@
-package Game;
+package game;
 
-import Color.Color;
-import Piece.Piece;
-import Player.Player;
-import Piece.Pawn;
-import Piece.King;
-import Piece.Bishop;
-import Piece.Knight;
-import Piece.Queen;
-import Piece.Rook;
+import color.Color;
+import piece.Piece;
+import player.Player;
+import piece.Pawn;
+import piece.King;
+import piece.Bishop;
+import piece.Knight;
+import piece.Queen;
+import piece.Rook;
 
 import java.util.ArrayList;
 

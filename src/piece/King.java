@@ -1,7 +1,6 @@
-package Piece;
+package piece;
 
-import Color.Color;
-import Game.Board;
+import color.Color;
 
 public class King extends Piece {
 

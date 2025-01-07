@@ -1,6 +1,6 @@
-package Piece;
+package piece;
 
-import Color.Color;
+import color.Color;
 
 public class Queen extends Piece {
 

@@ -1,7 +1,7 @@
-package Player;
+package player;
 
-import Color.Color;
-import Piece.Piece;
+import color.Color;
+import piece.Piece;
 
 import java.util.ArrayList;
 

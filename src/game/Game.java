@@ -1,7 +1,7 @@
-package Game;
+package game;
 
-import Color.Color;
-import Player.Player;
+import color.Color;
+import player.Player;
 
 import javax.swing.*;
 import java.util.Scanner;

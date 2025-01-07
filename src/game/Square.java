@@ -1,7 +1,7 @@
-package Game;
+package game;
 
-import Color.Color;
-import Piece.Piece;
+import color.Color;
+import piece.Piece;
 
 public class Square {
 
