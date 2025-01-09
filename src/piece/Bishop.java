@@ -13,16 +13,11 @@ public class Bishop extends Piece {
     public boolean move(int x, int y, int newX, int newY) {
 
         if (Math.abs(newX - x) == Math.abs(newY - y)) {
-            int direction = (newX < x) ? 1 : -1;
-            int direction1 = (newY < y) ? 1 : -1;
-            for (int i = x + direction; i <= newX; i++) {
-                for (int j = y + direction1; j <= newY; j++) {
-                    if (i == newX && j == newY) {
-                        return true;
-                    }
-                }
+            if (newX < x && newY < y) {
+                return true;
+            } else if (newX > x && newY > y) {
+                return true;
             }
-            return true;
         }
         return false;
     }

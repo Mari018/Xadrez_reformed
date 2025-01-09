@@ -308,6 +308,17 @@ public class Board {
             return false;
         }
 
+        if (piece instanceof Queen || piece instanceof Rook || piece instanceof Bishop) {
+            if (piece.move(x, y, newX, newY)) {
+                if (checkPath(x, y, newX, newY)) {
+
+                    getSquare(newX, newY).setPiece(piece);
+                    getSquare(x, y).setPiece(null);
+                    return true;
+                }
+            }
+            return false;
+        }
         // Set piece on an empty spot
         if (piece.move(x, y, newX, newY) && isEmpty(newX, newY)) {
 
@@ -331,6 +342,70 @@ public class Board {
         System.out.println("can't move");
         return false;
     }
+
+    private boolean checkPath(int x, int y, int newX, int newY) {
+        // Last position
+        if (x == newX && y == newY) {
+            return true;
+        }
+
+        // Move just on the col
+        if (x == newX) {
+            int direction = (newY > y) ? 1 : -1;
+            int nextY = y + direction;
+
+            // IF the next position is occupied return false
+            if (!isEmpty(x, nextY)) {
+                return false;
+            }
+            if (!isEmpty(newX, newY) && isCatchable(x,y,newX,newY)){
+                return true;
+            }
+
+            // Recursion
+            return checkPath(x, nextY, newX, newY);
+        }
+
+        // Move on the row
+        if (y == newY) {
+            int direction = (newX > x) ? 1 : -1;
+            int nextX = x + direction;
+
+            // Check if the next position is occupied
+            if (!isEmpty(nextX, y)) {
+                return false;
+            }
+            if (!isEmpty(newX, newY) && isCatchable(x,y,newX,newY)){
+                return true;
+            }
+
+            // Recursion
+            return checkPath(nextX, y, newX, newY);
+        }
+
+        // Move on the diagonal
+        if (Math.abs(newX - x) == Math.abs(newY - y)) {
+            int directionX = (newX > x) ? 1 : -1;
+            int directionY = (newY > y) ? 1 : -1;
+
+            int nextX = x + directionX;
+            int nextY = y + directionY;
+
+            // Check if its empty
+            if (!isEmpty(nextX, nextY)) {
+                return false;
+            }
+            if (!isEmpty(newX, newY) && isCatchable(x,y,newX,newY)){
+                return true;
+            }
+
+            // Recursion
+            return checkPath(nextX, nextY, newX, newY);
+        }
+
+        return false;
+    }
+
 
 }
 

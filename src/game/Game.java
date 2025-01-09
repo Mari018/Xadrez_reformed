@@ -6,6 +6,7 @@ import player.Player;
 import javax.swing.*;
 import java.util.Scanner;
 
+
 public class Game {
 
     // Have an array of players
@@ -85,6 +86,8 @@ public class Game {
     private void restart() throws Exception {
         start();
     }
+
+
 
     // Choose who starts
     private void chooseWhtPlayer() {
