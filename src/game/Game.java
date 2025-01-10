@@ -1,6 +1,9 @@
 package game;
 
 import color.Color;
+import piece.King;
+import piece.Piece;
+import piece.PieceType;
 import player.Player;
 
 import javax.swing.*;
@@ -119,13 +122,15 @@ public class Game {
     }
 
     private boolean winner() {
+        boolean player1HasKing = players[0].getOwnPieces().stream().anyMatch(piece -> piece.getType().equals(PieceType.KING));
+        boolean player2HasKing = players[1].getOwnPieces().stream().anyMatch(piece -> piece.getType().equals(PieceType.KING));
 
-        if (!players[0].isInCheck()) {
+        if (!player1HasKing) {
             System.out.println(players[0].getName() + " wins");
             return true;
         }
 
-        if (!players[1].isInCheck()) {
+        if (!player2HasKing) {
             System.out.println(players[1].getName() + " wins");
             return true;
         }

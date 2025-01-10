@@ -87,7 +87,7 @@ public class Board {
         } else {
             if (playerColor == Color.BLACK) {
                 piece = new King(Color.BLACK);
-                board[7][3].setPiece(piece);
+                board[7][4].setPiece(piece);
                 player.getOwnPieces().add(piece);
             }
         }
@@ -131,7 +131,7 @@ public class Board {
         } else {
             if (playerColor == Color.BLACK) {
                 piece = new Queen(Color.BLACK);
-                board[7][4].setPiece(piece);
+                board[7][3].setPiece(piece);
                 player.getOwnPieces().add(piece);
             }
         }
@@ -362,7 +362,6 @@ public class Board {
                 return true;
             }
 
-            // Recursion
             return checkPath(x, nextY, newX, newY);
         }
 
@@ -379,7 +378,6 @@ public class Board {
                 return true;
             }
 
-            // Recursion
             return checkPath(nextX, y, newX, newY);
         }
 
@@ -399,7 +397,6 @@ public class Board {
                 return true;
             }
 
-            // Recursion
             return checkPath(nextX, nextY, newX, newY);
         }
 

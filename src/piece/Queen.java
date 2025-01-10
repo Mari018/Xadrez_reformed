@@ -29,11 +29,16 @@ public class Queen extends Piece {
             }
         }
         if (Math.abs(newX - x) == Math.abs(newY - y)) {
-            if (newX < x && newY < y) {
+            if (newX > x && newY < y) {
                 return true;
             } else if (newX > x && newY > y) {
                 return true;
+            } else if (newX < x && newY < y) {
+                return true;
+            }else if (newX < x && newY > y){
+                return true;
             }
+
         }
 
         return false;

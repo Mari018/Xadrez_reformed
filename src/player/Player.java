@@ -14,7 +14,6 @@ public class Player {
     private String name;
     private Color color;
     private ArrayList<Piece> ownPieces = new ArrayList<>();
-    private boolean inCheck;
 
     public Player(String name){
         this.name = name;
@@ -47,7 +46,4 @@ public class Player {
         return ownPieces;
     }
 
-    public boolean isInCheck(){
-        return inCheck = true;
-    }
 }
