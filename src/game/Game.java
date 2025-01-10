@@ -125,12 +125,12 @@ public class Game {
         boolean player1HasKing = players[0].getOwnPieces().stream().anyMatch(piece -> piece.getType().equals(PieceType.KING));
         boolean player2HasKing = players[1].getOwnPieces().stream().anyMatch(piece -> piece.getType().equals(PieceType.KING));
 
-        if (!player1HasKing) {
+        if (!player2HasKing) {
             System.out.println(players[0].getName() + " wins");
             return true;
         }
 
-        if (!player2HasKing) {
+        if (!player1HasKing) {
             System.out.println(players[1].getName() + " wins");
             return true;
         }

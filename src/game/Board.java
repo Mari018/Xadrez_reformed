@@ -199,51 +199,51 @@ public class Board {
                 // Check the empty space do print the squares
                 if (piece == null) {
                     if (board[i][j].getColor() == Color.WHITE) {
-                        System.out.print("   ");
+                        System.out.print(" \u001B[47m  \u001B[0m");
                     } else {
-                        System.out.print(" &&");
+                        System.out.print(" \u001B[40m  \u001B[0m");
                     }
                 }
                 if (piece instanceof Pawn) {
                     if (piece.getColor() == Color.WHITE) {
-                        System.out.print(" wP");
+                        System.out.print(" ♟ ");
                     } else {
-                        System.out.print(" bP");
+                        System.out.print(" \u001B[30m♟\u001B[0m ");
                     }
                 }
                 if (piece instanceof King) {
                     if (piece.getColor() == Color.WHITE) {
-                        System.out.print(" wK");
+                        System.out.print(" ♚ ");
                     } else {
-                        System.out.print(" bK");
+                        System.out.print(" \u001B[30m♚\u001B[0m ");
                     }
                 }
                 if (piece instanceof Bishop) {
                     if (piece.getColor() == Color.WHITE) {
-                        System.out.print(" wB");
+                        System.out.print(" ♝ ");
                     } else {
-                        System.out.print(" bB");
+                        System.out.print(" \u001B[30m♝\u001B[0m ");
                     }
                 }
                 if (piece instanceof Knight) {
                     if (piece.getColor() == Color.WHITE) {
-                        System.out.print(" wk");
+                        System.out.print(" ♞ ");
                     } else {
-                        System.out.print(" bk");
+                        System.out.print(" \u001B[30m♞\u001B[0m ");
                     }
                 }
                 if (piece instanceof Queen) {
                     if (piece.getColor() == Color.WHITE) {
-                        System.out.print(" wQ");
+                        System.out.print(" ♛ ");
                     } else {
-                        System.out.print(" bQ");
+                        System.out.print(" \u001B[30m♛\u001B[0m ");
                     }
                 }
                 if (piece instanceof Rook) {
                     if (piece.getColor() == Color.WHITE) {
-                        System.out.print(" wR");
+                        System.out.print(" ♜ ");
                     } else {
-                        System.out.print(" bR");
+                        System.out.print(" \u001B[30m♜\u001B[0m ");
                     }
                 }
             }
